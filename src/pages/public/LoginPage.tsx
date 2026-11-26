@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { loginUser } from "../../services/auth";
+import { loginUser, getMicrosoftLoginUrl } from "../../services/auth";
 
 export const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -22,15 +22,19 @@ export const LoginPage: React.FC = () => {
     if (isAuthenticated) {
       if (isAdmin) {
         navigate("/admin/dashboard", { replace: true });
-      } else if(planId) {
+      } else if (planId) {
         navigate(`/customer/apply?planId=${planId}`, {
           replace: true,
         });
-      }  else {
+      } else {
         navigate("/customer/dashboard", { replace: true });
       }
     }
   }, [isAuthenticated, isAdmin, navigate]);
+
+  const handleMicrosoftLogin = () => {
+    window.location.href = getMicrosoftLoginUrl();
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -183,6 +187,49 @@ export const LoginPage: React.FC = () => {
               {loading ? "Authenticating..." : "Sign In →"}
             </button>
           </div>
+
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "12px",
+              margin: "1rem 0",
+              color: "var(--text-muted)",
+              fontSize: "0.8rem",
+            }}
+          >
+            <div style={{ flex: 1, height: "1px", background: "var(--border-subtle)" }} />
+            OR
+            <div style={{ flex: 1, height: "1px", background: "var(--border-subtle)" }} />
+          </div>
+
+          <button
+            type="button"
+            onClick={handleMicrosoftLogin}
+            style={{
+              width: "100%",
+              padding: "12px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "10px",
+              background: "#ffffff",
+              color: "#242424",
+              border: "1px solid #d1d5db",
+              borderRadius: "8px",
+              fontWeight: 600,
+              cursor: "pointer",
+            }}
+          >
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg"
+              alt="Microsoft"
+              width="20"
+              height="20"
+            />
+            Sign in with Microsoft
+          </button>
+
 
           <div
             style={{

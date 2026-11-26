@@ -161,14 +161,23 @@ export const ApplicationPage: React.FC = () => {
               <div className="drawer-info-item">
                 <span className="drawer-info-label">Monthly Premium</span>
                 <span className="drawer-info-val">
-                  ₹{Number(plan.premium_amount).toLocaleString("en-IN")}
+                  ₹
+                  {Number(
+                    plan.pricing_rules.find(
+                      (rule) =>
+                        rule.premium_frequency === "monthly" && rule.is_active
+                    )?.premium_amount ?? 0
+                  ).toLocaleString("en-IN")}
                 </span>
               </div>
 
               <div className="drawer-info-item">
                 <span className="drawer-info-label">Coverage Amount</span>
                 <span className="drawer-info-val">
-                  ₹{Number(plan.coverage_amount).toLocaleString("en-IN")}
+                  ₹
+                  {Number(
+                    plan.pricing_rules.find((rule) => rule.is_active)?.coverage_amount ?? 0
+                  ).toLocaleString("en-IN")}
                 </span>
               </div>
 
@@ -371,14 +380,23 @@ export const ApplicationPage: React.FC = () => {
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
                   <span style={{ color: "var(--text-muted)" }}>Monthly Premium:</span>
                   <strong style={{ color: "var(--primary-700)" }}>
-                    ₹{Number(plan?.premium_amount || 0).toLocaleString("en-IN")}
+                    ₹
+                    {Number(
+                      plan?.pricing_rules?.find(
+                        (rule) => rule.premium_frequency === "monthly" && rule.is_active
+                      )?.premium_amount || 0
+                    ).toLocaleString("en-IN")}
+
                   </strong>
                 </div>
 
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
                   <span style={{ color: "var(--text-muted)" }}>Coverage Limit:</span>
                   <strong style={{ color: "var(--accent-emerald)" }}>
-                    ₹{Number(plan?.coverage_amount || 0).toLocaleString("en-IN")}
+                    ₹
+                    {Number(
+                      plan?.pricing_rules?.find((rule) => rule.is_active)?.coverage_amount || 0
+                    ).toLocaleString("en-IN")}
                   </strong>
                 </div>
 

@@ -526,7 +526,11 @@ export const HomePage: React.FC = () => {
                     <div className="plan-pricing-row">
                       <div className="plan-price-block">
                         <span className="plan-price-val">
-                          {formatCurrency(plan.premium_amount)}
+                          {formatCurrency(
+                            plan.pricing_rules?.find(
+                              (rule) => rule.premium_frequency === "monthly" && rule.is_active
+                            )?.premium_amount ?? 0
+                          )}
                         </span>
 
                         <span className="plan-price-unit">
@@ -539,7 +543,9 @@ export const HomePage: React.FC = () => {
                       <div>
                         <dt>Coverage</dt>
                         <dd className="plan-coverage-limit">
-                          {formatCurrency(plan.coverage_amount)}
+                          {formatCurrency(
+                            plan.pricing_rules?.find((rule) => rule.is_active)?.coverage_amount ?? 0
+                          )}
                         </dd>
                       </div>
 

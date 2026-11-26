@@ -190,8 +190,14 @@ export const RegisterPage: React.FC = () => {
                 {activeSelectedPlan.name}
               </strong>
               <span style={{ fontSize: "0.78rem", color: "var(--text-muted)" }}>
-                {formatCurrency(activeSelectedPlan.premium_amount)}/mo •{" "}
-                {formatCurrency(activeSelectedPlan.coverage_amount)} coverage
+                {formatCurrency(activeSelectedPlan.pricing_rules?.find(
+                  (rule) => rule.premium_frequency === "monthly" && rule.is_active
+                )?.premium_amount ?? 0)}/mo •{" "}
+                {formatCurrency(
+                  activeSelectedPlan.pricing_rules?.find(
+                    (rule) => rule.is_active
+                  )?.coverage_amount ?? 0
+                )}{" "} coverage
               </span>
             </div>
 

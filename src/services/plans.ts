@@ -1,36 +1,112 @@
-const API_URL = (import.meta.env.VITE_API_BASE_URL || "http://localhost:8000").replace(/\/+$/, "");
+const API_URL = (
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8000"
+).replace(/\/+$/, "");
+
+// -----------------------------
+// Types
+// -----------------------------
+
+export interface PlanPricingRule {
+  id?: string;
+  min_age: number;
+  max_age: number;
+  coverage_amount: number;
+  duration_months: number;
+  premium_frequency: "annual" | "monthly";
+  premium_amount: number;
+  is_active: boolean;
+}
+
+export interface PlanBenefit {
+  id?: string;
+  benefit_name: string;
+  description?: string | null;
+  is_included: boolean;
+}
+
+export interface PlanCondition {
+  id?: string;
+  condition_type: string;
+  condition_value: string;
+  description?: string | null;
+}
 
 export interface Plan {
   id: string;
   name: string;
   description: string | null;
-  premium_amount: number;
-  coverage_amount: number;
+  plan_type: string;
+  min_entry_age: number;
+  max_entry_age: number;
   duration_months: number;
   is_active: boolean;
+
+  pricing_rules: PlanPricingRule[];
+  benefits: PlanBenefit[];
+  conditions: PlanCondition[];
 }
 
 export interface PlanCreate {
   name: string;
   description?: string | null;
-  premium_amount: number;
-  coverage_amount: number;
+  plan_type: string;
+  min_entry_age: number;
+  max_entry_age: number;
   duration_months: number;
+
+  pricing_rules: PlanPricingRule[];
+  benefits: PlanBenefit[];
+  conditions: PlanCondition[];
 }
 
-// Public: Fetch available active plans
+export type PlanUpdate = PlanCreate;
+
+interface PlanResponse {
+  message: string;
+  plan: Plan;
+}
+
+// -----------------------------
+// Error Handling
+// -----------------------------
+
+async function getErrorMessage(response: Response, fallback: string) {
+  const data = await response.json().catch(() => ({}));
+
+  let message = data.detail || fallback;
+
+  if (Array.isArray(message)) {
+    message = message
+      .map((item: { msg?: string }) => item.msg)
+      .filter(Boolean)
+      .join(", ");
+  }
+
+  return message;
+}
+
+// -----------------------------
+// Public: Get Available Plans
+// -----------------------------
+
 export const getAvailablePlans = async (): Promise<Plan[]> => {
-  const response = await fetch(`${API_URL}/admin/plans/available/plans`);
+  const response = await fetch(
+    `${API_URL}/admin/plans/available/plans`
+  );
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({}));
-    throw new Error(error.detail || "Failed to fetch health insurance plans");
+    throw new Error(
+      await getErrorMessage(response, "Failed to fetch health insurance plans.")
+    );
   }
 
   return response.json();
 };
 
-// Admin: Fetch all plans (active + inactive)
+// -----------------------------
+// Admin: Get All Plans
+// -----------------------------
+
 export const getAllPlans = async (token: string): Promise<Plan[]> => {
   const response = await fetch(`${API_URL}/admin/plans/`, {
     headers: {
@@ -39,18 +115,48 @@ export const getAllPlans = async (token: string): Promise<Plan[]> => {
   });
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({}));
-    throw new Error(error.detail || "Failed to fetch admin plans");
+    throw new Error(
+      await getErrorMessage(response, "Failed to fetch admin plans.")
+    );
   }
 
   return response.json();
 };
 
-// Admin: Create a new plan
+// -----------------------------
+// Admin: Get Plan By ID
+// -----------------------------
+
+export const getPlanById = async (
+  token: string,
+  planId: string
+): Promise<Plan> => {
+  const response = await fetch(
+    `${API_URL}/admin/plans/${planId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      await getErrorMessage(response, "Failed to fetch plan details.")
+    );
+  }
+
+  return response.json();
+};
+
+// -----------------------------
+// Admin: Create Plan
+// -----------------------------
+
 export const createPlan = async (
   token: string,
   plan: PlanCreate
-): Promise<{ message: string; plan: Plan }> => {
+): Promise<PlanResponse> => {
   const response = await fetch(`${API_URL}/admin/plans/`, {
     method: "POST",
     headers: {
@@ -60,25 +166,51 @@ export const createPlan = async (
     body: JSON.stringify(plan),
   });
 
-  const resData = await response.json().catch(() => ({}));
-
   if (!response.ok) {
-    let errorMsg = resData.detail || "Failed to create plan.";
-    if (Array.isArray(resData.detail)) {
-      errorMsg = resData.detail.map((d: { msg?: string }) => d.msg).filter(Boolean).join(", ");
-    }
-    throw new Error(errorMsg);
+    throw new Error(
+      await getErrorMessage(response, "Failed to create plan.")
+    );
   }
 
-  return resData;
+  return response.json();
 };
 
-// Admin: Activate or deactivate a plan
+// -----------------------------
+// Admin: Update Complete Plan
+// -----------------------------
+
+export const updatePlan = async (
+  token: string,
+  planId: string,
+  plan: PlanUpdate
+): Promise<PlanResponse> => {
+  const response = await fetch(
+    `${API_URL}/admin/plans/${planId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(plan),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      await getErrorMessage(response, "Failed to update plan.")
+    );
+  }
+
+  return response.json();
+};
+
+// Admin: Activate / Deactivate
 export const updatePlanStatus = async (
   token: string,
   planId: string,
   isActive: boolean
-): Promise<{ message: string; plan: Plan }> => {
+): Promise<PlanResponse> => {
   const response = await fetch(
     `${API_URL}/admin/plans/${planId}/status`,
     {
@@ -93,11 +225,11 @@ export const updatePlanStatus = async (
     }
   );
 
-  const resData = await response.json().catch(() => ({}));
-
   if (!response.ok) {
-    throw new Error(resData.detail || "Failed to update plan status.");
+    throw new Error(
+      await getErrorMessage(response, "Failed to update plan status.")
+    );
   }
 
-  return resData;
+  return response.json();
 };

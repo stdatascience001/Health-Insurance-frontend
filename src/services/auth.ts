@@ -117,3 +117,9 @@ export const updateMe = async (
 
   return resData;
 };
+
+
+// Microsoft Admin Login
+export const getMicrosoftLoginUrl = (): string => {
+  return `${API_URL}/auth/microsoft/login`;
+};
