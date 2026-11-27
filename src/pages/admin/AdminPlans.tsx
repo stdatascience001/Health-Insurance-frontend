@@ -85,7 +85,7 @@ interface ConditionForm {
 const emptyPricingRule = (): PricingRuleForm => ({
   min_age: "18",
   max_age: "65",
-  coverage_amount: "",
+  coverage_amount: "1000000",
   duration_months: "12",
   premium_frequency: "annual",
   premium_amount: "",
@@ -1053,12 +1053,8 @@ export const AdminPlans: React.FC = () => {
           <div
             className="modal-card admin-plan-modal-card"
             onClick={(e) => e.stopPropagation()}
-            style={{
-              width: "min(920px, 96vw)",
-              maxHeight: "92vh",
-              overflowY: "auto",
-            }}
           >
+            {/* MODAL HEADER */}
             <div className="modal-header-banner">
               <div className="modal-header-top">
                 <span className="modal-badge">
@@ -1066,6 +1062,7 @@ export const AdminPlans: React.FC = () => {
                 </span>
 
                 <button
+                  type="button"
                   className="modal-close-btn"
                   onClick={handleCloseAddModal}
                   disabled={saving}
@@ -1085,680 +1082,533 @@ export const AdminPlans: React.FC = () => {
             </div>
 
             <form
-              className="modal-form"
               onSubmit={handleCreatePlan}
+              style={{ display: "flex", flexDirection: "column", flex: 1, minHeight: 0 }}
             >
-              {/* SECTION 1: BASIC INFORMATION */}
-              <div className="form-section">
-                <h3 className="form-section-title">
-                  1. Basic Information
-                </h3>
-
-                <p className="form-section-description">
-                  Define the plan identity and customer eligibility.
-                </p>
-
-                <div className="form-field">
-                  <label className="form-label">
-                    Plan Name <span className="label-required">* Required</span>
-                  </label>
-
-                  <input
-                    type="text"
-                    className="form-input"
-                    placeholder="e.g. Executive Platinum Shield"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    minLength={3}
-                    maxLength={100}
-                    required
-                    autoFocus
-                  />
-                </div>
-
-                <div className="form-field">
-                  <label className="form-label">
-                    Plan Description
-                  </label>
-
-                  <textarea
-                    className="form-input"
-                    rows={3}
-                    placeholder="Describe the plan and its key highlights..."
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    style={{
-                      resize: "vertical",
-                      height: "auto",
-                    }}
-                  />
-                </div>
-
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-                    gap: "14px",
-                  }}
-                >
-                  <div className="form-field">
-                    <label className="form-label">
-                      Plan Type <span className="label-required">*</span>
-                    </label>
-
-                    <select
-                      className="form-input"
-                      value={planType}
-                      onChange={(e) => setPlanType(e.target.value)}
-                      required
-                    >
-                      <option value="individual">Individual</option>
-                      <option value="senior">Senior Citizen</option>
-                      <option value="critical_illness">Critical Illness</option>
-                      <option value="comprehensive">Comprehensive</option>
-                    </select>
+              <div className="admin-modal-body-scroll">
+                {/* SECTION 1: BASIC INFORMATION */}
+                <div className="admin-form-section">
+                  <div className="admin-section-header">
+                    <div>
+                      <h3 className="admin-section-title">
+                        1. Basic Information
+                      </h3>
+                      <p className="admin-section-desc">
+                        Define the plan identity and customer eligibility.
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="form-field">
-                    <label className="form-label">
-                      Minimum Entry Age
-                    </label>
+                  <div className="admin-form-group">
+                    <div className="admin-label-row">
+                      <label className="admin-label" htmlFor="plan-modal-name">
+                        Plan Name
+                      </label>
+                      <span className="admin-req-tag">* Required</span>
+                    </div>
 
                     <input
-                      type="number"
-                      className="form-input"
-                      min="18"
-                      max="100"
-                      value={minEntryAge}
-                      onChange={(e) => setMinEntryAge(e.target.value)}
+                      id="plan-modal-name"
+                      type="text"
+                      className="admin-modal-input"
+                      placeholder="e.g. Executive Platinum Shield"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      minLength={3}
+                      maxLength={100}
                       required
+                      autoFocus
                     />
                   </div>
 
-                  <div className="form-field">
-                    <label className="form-label">
-                      Maximum Entry Age
-                    </label>
+                  <div className="admin-form-group">
+                    <div className="admin-label-row">
+                      <label className="admin-label" htmlFor="plan-modal-desc">
+                        Plan Description
+                      </label>
+                    </div>
 
-                    <input
-                      type="number"
-                      className="form-input"
-                      min="18"
-                      max="100"
-                      value={maxEntryAge}
-                      onChange={(e) => setMaxEntryAge(e.target.value)}
-                      required
+                    <textarea
+                      id="plan-modal-desc"
+                      className="admin-modal-textarea"
+                      rows={3}
+                      placeholder="Describe the plan and its key highlights..."
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
                     />
                   </div>
-                </div>
-              </div>
 
-              {/* SECTION 2: COVERAGE & POLICY */}
-              <div className="form-section">
-                <h3 className="form-section-title">
-                  2. Coverage &amp; Policy
-                </h3>
+                  <div className="admin-grid-3">
+                    <div className="admin-form-group">
+                      <label className="admin-label">
+                        Plan Type <span className="admin-req-star">*</span>
+                      </label>
 
-                <p className="form-section-description">
-                  Set the default policy duration. Individual coverage amounts are configured through pricing rules below.
-                </p>
-
-                <div className="form-field">
-                  <label className="form-label">
-                    Default Policy Duration (Months)
-                  </label>
-
-                  <input
-                    type="number"
-                    className="form-input"
-                    min="1"
-                    value={durationMonths}
-                    onChange={(e) => setDurationMonths(e.target.value)}
-                    required
-                  />
-
-                  <div className="preset-buttons-row">
-                    <span className="preset-label">Duration:</span>
-
-                    {DURATION_PRESETS.map((item) => (
-                      <button
-                        key={item.value}
-                        type="button"
-                        className={`preset-btn ${durationMonths === String(item.value) ? "selected" : ""}`}
-                        onClick={() =>
-                          setDurationMonths(String(item.value))
-                        }
+                      <select
+                        className="admin-modal-select"
+                        value={planType}
+                        onChange={(e) => setPlanType(e.target.value)}
+                        required
                       >
-                        {item.label}
+                        <option value="individual">Individual</option>
+                        <option value="family">Family Floater</option>
+                        <option value="senior">Senior Citizen</option>
+                        <option value="critical_illness">Critical Illness</option>
+                        <option value="comprehensive">Comprehensive</option>
+                      </select>
+                    </div>
+
+                    <div className="admin-form-group">
+                      <label className="admin-label">
+                        Minimum Entry Age
+                      </label>
+
+                      <input
+                        type="number"
+                        className="admin-modal-input"
+                        min="0"
+                        max="100"
+                        value={minEntryAge}
+                        onChange={(e) => setMinEntryAge(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    <div className="admin-form-group">
+                      <label className="admin-label">
+                        Maximum Entry Age
+                      </label>
+
+                      <input
+                        type="number"
+                        className="admin-modal-input"
+                        min="0"
+                        max="100"
+                        value={maxEntryAge}
+                        onChange={(e) => setMaxEntryAge(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* SECTION 2: COVERAGE & POLICY */}
+                <div className="admin-form-section">
+                  <div className="admin-section-header">
+                    <div>
+                      <h3 className="admin-section-title">
+                        2. Coverage &amp; Policy
+                      </h3>
+                      <p className="admin-section-desc">
+                        Set the default policy duration. Individual coverage amounts are configured through pricing rules below.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="admin-form-group">
+                    <label className="admin-label">
+                      Default Policy Duration (Months)
+                    </label>
+
+                    <input
+                      type="number"
+                      className="admin-modal-input"
+                      min="1"
+                      value={durationMonths}
+                      onChange={(e) => setDurationMonths(e.target.value)}
+                      required
+                    />
+
+                    <div className="duration-presets-row">
+                      <span className="presets-label">Duration:</span>
+
+                      {DURATION_PRESETS.map((item) => (
+                        <button
+                          key={item.value}
+                          type="button"
+                          className={`duration-chip ${durationMonths === String(item.value) ? "active" : ""}`}
+                          onClick={() => setDurationMonths(String(item.value))}
+                        >
+                          {item.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* SECTION 3: PRICING CONFIGURATION */}
+                <div className="admin-form-section">
+                  <div className="admin-section-header">
+                    <div>
+                      <h3 className="admin-section-title">
+                        3. Pricing Configuration
+                      </h3>
+                      <p className="admin-section-desc">
+                        Configure premiums separately for each age group, coverage amount, and payment frequency.
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      className="btn-add-section-item"
+                      onClick={() =>
+                        setPricingRules((prev) => [
+                          ...prev,
+                          emptyPricingRule(),
+                        ])
+                      }
+                    >
+                      + Add Pricing Rule
+                    </button>
+                  </div>
+
+                  {pricingRules.map((rule, index) => (
+                    <div key={index} className="pricing-rule-card">
+                      <div className="pricing-rule-card-header">
+                        <span className="pricing-rule-card-title">
+                          Pricing Rule {index + 1}
+                        </span>
+
+                        {pricingRules.length > 1 && (
+                          <button
+                            type="button"
+                            className="btn-remove-rule"
+                            onClick={() =>
+                              setPricingRules((prev) =>
+                                prev.filter((_, i) => i !== index)
+                              )
+                            }
+                          >
+                            Remove
+                          </button>
+                        )}
+                      </div>
+
+                      <div className="admin-grid-3">
+                        <div className="admin-form-group">
+                          <label className="admin-label">Minimum Age</label>
+                          <input
+                            type="number"
+                            className="admin-modal-input"
+                            min="0"
+                            max="100"
+                            value={rule.min_age}
+                            onChange={(e) =>
+                              updatePricingRule(index, "min_age", e.target.value)
+                            }
+                            required
+                          />
+                        </div>
+
+                        <div className="admin-form-group">
+                          <label className="admin-label">Maximum Age</label>
+                          <input
+                            type="number"
+                            className="admin-modal-input"
+                            min="0"
+                            max="100"
+                            value={rule.max_age}
+                            onChange={(e) =>
+                              updatePricingRule(index, "max_age", e.target.value)
+                            }
+                            required
+                          />
+                        </div>
+
+                        <div className="admin-form-group">
+                          <label className="admin-label">Coverage Amount (₹)</label>
+                          <input
+                            type="number"
+                            className="admin-modal-input"
+                            min="1"
+                            step="1"
+                            placeholder="1000000"
+                            value={rule.coverage_amount}
+                            onChange={(e) =>
+                              updatePricingRule(index, "coverage_amount", e.target.value)
+                            }
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div className="admin-grid-3">
+                        <div className="admin-form-group">
+                          <label className="admin-label">Policy Duration (Months)</label>
+                          <input
+                            type="number"
+                            className="admin-modal-input"
+                            min="1"
+                            value={rule.duration_months}
+                            onChange={(e) =>
+                              updatePricingRule(index, "duration_months", e.target.value)
+                            }
+                            required
+                          />
+                        </div>
+
+                        <div className="admin-form-group">
+                          <label className="admin-label">Payment Frequency</label>
+                          <select
+                            className="admin-modal-select"
+                            value={rule.premium_frequency}
+                            onChange={(e) =>
+                              updatePricingRule(
+                                index,
+                                "premium_frequency",
+                                e.target.value as "annual" | "monthly"
+                              )
+                            }
+                          >
+                            <option value="annual">Annual</option>
+                            <option value="monthly">Monthly</option>
+                          </select>
+                        </div>
+
+                        <div className="admin-form-group">
+                          <label className="admin-label">
+                            {rule.premium_frequency === "monthly"
+                              ? "Monthly Premium (₹)"
+                              : "Annual Premium (₹)"}
+                          </label>
+                          <input
+                            type="number"
+                            className="admin-modal-input"
+                            min="0.01"
+                            step="0.01"
+                            placeholder={
+                              rule.premium_frequency === "monthly"
+                                ? "e.g. 1200"
+                                : "e.g. 12000"
+                            }
+                            value={rule.premium_amount}
+                            onChange={(e) =>
+                              updatePricingRule(index, "premium_amount", e.target.value)
+                            }
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <label className="admin-checkbox-label">
+                        <input
+                          type="checkbox"
+                          checked={rule.is_active}
+                          onChange={(e) =>
+                            updatePricingRule(index, "is_active", e.target.checked)
+                          }
+                        />
+                        <span>Active pricing rule</span>
+                      </label>
+                    </div>
+                  ))}
+
+                  <div className="coverage-presets-row">
+                    <span className="presets-label">Coverage presets:</span>
+
+                    {COVERAGE_PRESETS.map((preset) => (
+                      <button
+                        key={preset.value}
+                        type="button"
+                        className={`coverage-chip ${pricingRules[0]?.coverage_amount === String(preset.value) ? "active" : ""}`}
+                        onClick={() => {
+                          updatePricingRule(
+                            0,
+                            "coverage_amount",
+                            String(preset.value)
+                          );
+                        }}
+                      >
+                        {preset.label}
                       </button>
                     ))}
                   </div>
                 </div>
-              </div>
 
-              {/* SECTION 3: PRICING RULES */}
-              <div className="form-section">
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    gap: "12px",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  <div>
-                    <h3 className="form-section-title">
-                      3. Pricing Configuration
-                    </h3>
+                {/* SECTION 4: BENEFITS */}
+                <div className="admin-form-section">
+                  <div className="admin-section-header">
+                    <div>
+                      <h3 className="admin-section-title">4. Benefits</h3>
+                      <p className="admin-section-desc">
+                        Define the benefits included or excluded from this plan.
+                      </p>
+                    </div>
 
-                    <p className="form-section-description">
-                      Configure premiums separately for each age group, coverage amount, and payment frequency.
-                    </p>
+                    <button
+                      type="button"
+                      className="btn-add-section-item"
+                      onClick={() =>
+                        setBenefits((prev) => [
+                          ...prev,
+                          emptyBenefit(),
+                        ])
+                      }
+                    >
+                      + Add Benefit
+                    </button>
                   </div>
 
-                  <button
-                    type="button"
-                    className="secondary-btn"
-                    onClick={() =>
-                      setPricingRules((prev) => [
-                        ...prev,
-                        emptyPricingRule(),
-                      ])
-                    }
-                  >
-                    + Add Pricing Rule
-                  </button>
+                  {benefits.map((benefit, index) => (
+                    <div key={index} className="admin-item-card">
+                      <div className="admin-item-card-header">
+                        <span className="pricing-rule-card-title">Benefit {index + 1}</span>
+
+                        {benefits.length > 1 && (
+                          <button
+                            type="button"
+                            className="btn-remove-rule"
+                            onClick={() =>
+                              setBenefits((prev) =>
+                                prev.filter((_, i) => i !== index)
+                              )
+                            }
+                          >
+                            Remove
+                          </button>
+                        )}
+                      </div>
+
+                      <div className="admin-form-group">
+                        <label className="admin-label">Benefit Name</label>
+                        <input
+                          type="text"
+                          className="admin-modal-input"
+                          placeholder="e.g. Hospitalization Coverage"
+                          value={benefit.benefit_name}
+                          onChange={(e) =>
+                            updateBenefit(index, "benefit_name", e.target.value)
+                          }
+                        />
+                      </div>
+
+                      <div className="admin-form-group">
+                        <label className="admin-label">Description</label>
+                        <textarea
+                          className="admin-modal-textarea"
+                          rows={2}
+                          placeholder="Explain this benefit..."
+                          value={benefit.description}
+                          onChange={(e) =>
+                            updateBenefit(index, "description", e.target.value)
+                          }
+                        />
+                      </div>
+
+                      <label className="admin-checkbox-label">
+                        <input
+                          type="checkbox"
+                          checked={benefit.is_included}
+                          onChange={(e) =>
+                            updateBenefit(index, "is_included", e.target.checked)
+                          }
+                        />
+                        <span>Included in this plan</span>
+                      </label>
+                    </div>
+                  ))}
                 </div>
 
-                {pricingRules.map((rule, index) => (
-                  <div
-                    key={index}
-                    className="pricing-rule-card"
-                    style={{
-                      border: "1px solid var(--border-color, #e5e7eb)",
-                      borderRadius: "12px",
-                      padding: "16px",
-                      marginTop: "14px",
-                      background: "var(--surface-secondary, #fafafa)",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        marginBottom: "14px",
-                      }}
-                    >
-                      <strong>
-                        Pricing Rule {index + 1}
-                      </strong>
-
-                      {pricingRules.length > 1 && (
-                        <button
-                          type="button"
-                          className="secondary-btn"
-                          onClick={() =>
-                            setPricingRules((prev) =>
-                              prev.filter((_, i) => i !== index)
-                            )
-                          }
-                        >
-                          Remove
-                        </button>
-                      )}
+                {/* SECTION 5: CONDITIONS */}
+                <div className="admin-form-section">
+                  <div className="admin-section-header">
+                    <div>
+                      <h3 className="admin-section-title">5. Conditions &amp; Exclusions</h3>
+                      <p className="admin-section-desc">
+                        Configure waiting periods, copay, room rent limits, deductibles, and exclusions.
+                      </p>
                     </div>
 
-                    <div
-                      style={{
-                        display: "grid",
-                        gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-                        gap: "12px",
-                      }}
-                    >
-                      <div className="form-field">
-                        <label className="form-label">
-                          Minimum Age
-                        </label>
-
-                        <input
-                          type="number"
-                          className="form-input"
-                          min={minEntryAge}
-                          max={maxEntryAge}
-                          value={rule.min_age}
-                          onChange={(e) =>
-                            updatePricingRule(index, "min_age", e.target.value)
-                          }
-                          required
-                        />
-                      </div>
-
-                      <div className="form-field">
-                        <label className="form-label">
-                          Maximum Age
-                        </label>
-
-                        <input
-                          type="number"
-                          className="form-input"
-                          min={minEntryAge}
-                          max={maxEntryAge}
-                          value={rule.max_age}
-                          onChange={(e) =>
-                            updatePricingRule(index, "max_age", e.target.value)
-                          }
-                          required
-                        />
-                      </div>
-
-                      <div className="form-field">
-                        <label className="form-label">
-                          Coverage Amount (₹)
-                        </label>
-
-                        <input
-                          type="number"
-                          className="form-input"
-                          min="1"
-                          step="1"
-                          placeholder="1000000"
-                          value={rule.coverage_amount}
-                          onChange={(e) =>
-                            updatePricingRule(index, "coverage_amount", e.target.value)
-                          }
-                          required
-                        />
-
-                        {rule.coverage_amount &&
-                          Number(rule.coverage_amount) > 0 && (
-                            <span className="formatted-preview-pill">
-                              {formatLakhsWords(rule.coverage_amount)}
-                            </span>
-                          )}
-                      </div>
-
-                      <div className="form-field">
-                        <label className="form-label">
-                          Policy Duration (Months)
-                        </label>
-
-                        <input
-                          type="number"
-                          className="form-input"
-                          min="1"
-                          value={rule.duration_months}
-                          onChange={(e) =>
-                            updatePricingRule(index, "duration_months", e.target.value)
-                          }
-                          required
-                        />
-                      </div>
-
-                      <div className="form-field">
-                        <label className="form-label">
-                          Payment Frequency
-                        </label>
-
-                        <select
-                          className="form-input"
-                          value={rule.premium_frequency}
-                          onChange={(e) =>
-                            updatePricingRule(
-                              index,
-                              "premium_frequency",
-                              e.target.value as "annual" | "monthly"
-                            )
-                          }
-                        >
-                          <option value="annual">Annual</option>
-                          <option value="monthly">Monthly</option>
-                        </select>
-                      </div>
-
-                      <div className="form-field">
-                        <label className="form-label">
-                          {rule.premium_frequency === "monthly"
-                            ? "Monthly Premium (₹)"
-                            : "Annual Premium (₹)"}
-                        </label>
-
-                        <input
-                          type="number"
-                          className="form-input"
-                          min="0.01"
-                          step="0.01"
-                          placeholder={
-                            rule.premium_frequency === "monthly"
-                              ? "e.g. 1200"
-                              : "e.g. 12000"
-                          }
-                          value={rule.premium_amount}
-                          onChange={(e) =>
-                            updatePricingRule(index, "premium_amount", e.target.value)
-                          }
-                          required
-                        />
-
-                        {rule.premium_amount &&
-                          Number(rule.premium_amount) > 0 && (
-                            <span className="formatted-preview-pill premium">
-                              {formatCurrency(rule.premium_amount)}
-                            </span>
-                          )}
-                      </div>
-                    </div>
-
-                    <label
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "8px",
-                        marginTop: "10px",
-                        fontSize: "0.85rem",
-                      }}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={rule.is_active}
-                        onChange={(e) =>
-                          updatePricingRule(index, "is_active", e.target.checked)
-                        }
-                      />
-                      Active pricing rule
-                    </label>
-                  </div>
-                ))}
-
-                <div className="preset-buttons-row">
-                  <span className="preset-label">
-                    Coverage presets:
-                  </span>
-
-                  {COVERAGE_PRESETS.map((preset) => (
                     <button
-                      key={preset.value}
                       type="button"
-                      className="preset-btn"
-                      onClick={() => {
-                        updatePricingRule(
-                          0,
-                          "coverage_amount",
-                          String(preset.value)
-                        );
-                      }}
+                      className="btn-add-section-item"
+                      onClick={() =>
+                        setConditions((prev) => [
+                          ...prev,
+                          emptyCondition(),
+                        ])
+                      }
                     >
-                      {preset.label}
+                      + Add Condition
                     </button>
+                  </div>
+
+                  {conditions.map((condition, index) => (
+                    <div key={index} className="admin-item-card">
+                      <div className="admin-item-card-header">
+                        <span className="pricing-rule-card-title">Condition {index + 1}</span>
+
+                        {conditions.length > 1 && (
+                          <button
+                            type="button"
+                            className="btn-remove-rule"
+                            onClick={() =>
+                              setConditions((prev) =>
+                                prev.filter((_, i) => i !== index)
+                              )
+                            }
+                          >
+                            Remove
+                          </button>
+                        )}
+                      </div>
+
+                      <div className="admin-grid-3" style={{ gridTemplateColumns: "1fr 1fr" }}>
+                        <div className="admin-form-group">
+                          <label className="admin-label">Condition Type</label>
+                          <select
+                            className="admin-modal-select"
+                            value={condition.condition_type}
+                            onChange={(e) =>
+                              updateCondition(index, "condition_type", e.target.value)
+                            }
+                          >
+                            <option value="waiting_period">Waiting Period</option>
+                            <option value="exclusion">Exclusion</option>
+                            <option value="copay">Copay</option>
+                            <option value="room_rent">Room Rent Limit</option>
+                            <option value="deductible">Deductible</option>
+                            <option value="sub_limit">Sub-limit</option>
+                            <option value="other">Other</option>
+                          </select>
+                        </div>
+
+                        <div className="admin-form-group">
+                          <label className="admin-label">Condition Value</label>
+                          <input
+                            type="text"
+                            className="admin-modal-input"
+                            placeholder="e.g. 30 days, 10%, 5000"
+                            value={condition.condition_value}
+                            onChange={(e) =>
+                              updateCondition(index, "condition_value", e.target.value)
+                            }
+                          />
+                        </div>
+                      </div>
+
+                      <div className="admin-form-group">
+                        <label className="admin-label">Description</label>
+                        <textarea
+                          className="admin-modal-textarea"
+                          rows={2}
+                          placeholder="Explain the condition or limitation..."
+                          value={condition.description}
+                          onChange={(e) =>
+                            updateCondition(index, "description", e.target.value)
+                          }
+                        />
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
 
-              {/* SECTION 4: BENEFITS */}
-              <div className="form-section">
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    gap: "12px",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  <div>
-                    <h3 className="form-section-title">
-                      4. Benefits
-                    </h3>
-
-                    <p className="form-section-description">
-                      Define the benefits included or excluded from this plan.
-                    </p>
-                  </div>
-
-                  <button
-                    type="button"
-                    className="secondary-btn"
-                    onClick={() =>
-                      setBenefits((prev) => [
-                        ...prev,
-                        emptyBenefit(),
-                      ])
-                    }
-                  >
-                    + Add Benefit
-                  </button>
-                </div>
-
-                {benefits.map((benefit, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      border: "1px solid var(--border-color, #e5e7eb)",
-                      borderRadius: "10px",
-                      padding: "14px",
-                      marginTop: "12px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                      }}
-                    >
-                      <strong>Benefit {index + 1}</strong>
-
-                      {benefits.length > 1 && (
-                        <button
-                          type="button"
-                          className="secondary-btn"
-                          onClick={() =>
-                            setBenefits((prev) =>
-                              prev.filter((_, i) => i !== index)
-                            )
-                          }
-                        >
-                          Remove
-                        </button>
-                      )}
-                    </div>
-
-                    <div className="form-field" style={{ marginTop: "12px" }}>
-                      <label className="form-label">
-                        Benefit Name
-                      </label>
-
-                      <input
-                        type="text"
-                        className="form-input"
-                        placeholder="e.g. Hospitalization Coverage"
-                        value={benefit.benefit_name}
-                        onChange={(e) =>
-                          updateBenefit(index, "benefit_name", e.target.value)
-                        }
-                      />
-                    </div>
-
-                    <div className="form-field">
-                      <label className="form-label">
-                        Description
-                      </label>
-
-                      <textarea
-                        className="form-input"
-                        rows={2}
-                        placeholder="Explain this benefit..."
-                        value={benefit.description}
-                        onChange={(e) =>
-                          updateBenefit(index, "description", e.target.value)
-                        }
-                        style={{ height: "auto", resize: "vertical" }}
-                      />
-                    </div>
-
-                    <label
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "8px",
-                        fontSize: "0.85rem",
-                      }}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={benefit.is_included}
-                        onChange={(e) =>
-                          updateBenefit(index, "is_included", e.target.checked)
-                        }
-                      />
-                      Included in this plan
-                    </label>
-                  </div>
-                ))}
-              </div>
-
-              {/* SECTION 5: CONDITIONS */}
-              <div className="form-section">
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    gap: "12px",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  <div>
-                    <h3 className="form-section-title">
-                      5. Conditions &amp; Exclusions
-                    </h3>
-
-                    <p className="form-section-description">
-                      Configure waiting periods, copay, room rent limits, deductibles, and exclusions.
-                    </p>
-                  </div>
-
-                  <button
-                    type="button"
-                    className="secondary-btn"
-                    onClick={() =>
-                      setConditions((prev) => [
-                        ...prev,
-                        emptyCondition(),
-                      ])
-                    }
-                  >
-                    + Add Condition
-                  </button>
-                </div>
-
-                {conditions.map((condition, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      border: "1px solid var(--border-color, #e5e7eb)",
-                      borderRadius: "10px",
-                      padding: "14px",
-                      marginTop: "12px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                      }}
-                    >
-                      <strong>Condition {index + 1}</strong>
-
-                      {conditions.length > 1 && (
-                        <button
-                          type="button"
-                          className="secondary-btn"
-                          onClick={() =>
-                            setConditions((prev) =>
-                              prev.filter((_, i) => i !== index)
-                            )
-                          }
-                        >
-                          Remove
-                        </button>
-                      )}
-                    </div>
-
-                    <div
-                      style={{
-                        display: "grid",
-                        gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-                        gap: "12px",
-                        marginTop: "12px",
-                      }}
-                    >
-                      <div className="form-field">
-                        <label className="form-label">
-                          Condition Type
-                        </label>
-
-                        <select
-                          className="form-input"
-                          value={condition.condition_type}
-                          onChange={(e) =>
-                            updateCondition(index, "condition_type", e.target.value)
-                          }
-                        >
-                          <option value="waiting_period">Waiting Period</option>
-                          <option value="exclusion">Exclusion</option>
-                          <option value="copay">Copay</option>
-                          <option value="room_rent">Room Rent Limit</option>
-                          <option value="deductible">Deductible</option>
-                          <option value="sub_limit">Sub-limit</option>
-                          <option value="other">Other</option>
-                        </select>
-                      </div>
-
-                      <div className="form-field">
-                        <label className="form-label">
-                          Condition Value
-                        </label>
-
-                        <input
-                          type="text"
-                          className="form-input"
-                          placeholder="e.g. 30 days, 10%, 5000"
-                          value={condition.condition_value}
-                          onChange={(e) =>
-                            updateCondition(index, "condition_value", e.target.value)
-                          }
-                        />
-                      </div>
-                    </div>
-
-                    <div className="form-field">
-                      <label className="form-label">
-                        Description
-                      </label>
-
-                      <textarea
-                        className="form-input"
-                        rows={2}
-                        placeholder="Explain the condition or limitation..."
-                        value={condition.description}
-                        onChange={(e) =>
-                          updateCondition(index, "description", e.target.value)
-                        }
-                        style={{ height: "auto", resize: "vertical" }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-
               {/* FORM ACTIONS */}
-              <div className="modal-actions">
+              <div className="admin-modal-footer">
                 <button
                   type="button"
-                  className="secondary-btn"
+                  className="btn-modal-cancel"
                   onClick={handleCloseAddModal}
                   disabled={saving}
                 >
@@ -1767,7 +1617,7 @@ export const AdminPlans: React.FC = () => {
 
                 <button
                   type="submit"
-                  className="primary-btn"
+                  className="btn-modal-submit"
                   disabled={saving}
                 >
                   {saving

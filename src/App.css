@@ -1,6 +1,4 @@
-/* ==========================================================================
-   Health Insurance - Clean & Simple Individual Health Portal Theme
-   ========================================================================== */
+/* Health Insurance - Clean & Simple Individual Health Portal Theme */
 
 .app {
   min-height: 100vh;
@@ -14,9 +12,7 @@
   outline-offset: 2px;
 }
 
-/* --------------------------------------------------------------------------
-   Top Navigation Bar
-   -------------------------------------------------------------------------- */
+/*   Top Navigation Bar */
 .topbar {
   position: sticky;
   top: 0;
@@ -176,9 +172,7 @@
   font-weight: 600;
 }
 
-/* --------------------------------------------------------------------------
-   Main Content Layout
-   -------------------------------------------------------------------------- */
+/* Main Content Layout */
 .main-content {
   flex: 1;
   max-width: 1360px;
@@ -293,9 +287,9 @@
   cursor: not-allowed;
 }
 
-/* --------------------------------------------------------------------------
+/*
    Compact Metrics Strip (For Customer & Dashboard Views)
-   -------------------------------------------------------------------------- */
+    */
 .metrics-strip {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -373,9 +367,7 @@
   margin-top: 2px;
 }
 
-/* --------------------------------------------------------------------------
-   Content Card & Table
-   -------------------------------------------------------------------------- */
+/*   Content Card & Table    */
 .content-card {
   background: var(--bg-surface);
   border: 1px solid var(--border-light);
@@ -665,9 +657,9 @@
   margin-bottom: 1rem;
 }
 
-/* --------------------------------------------------------------------------
+/*
    HOME PAGE: Hero
-   -------------------------------------------------------------------------- */
+    */
 .hero {
   position: relative;
   display: grid;
@@ -916,9 +908,9 @@
   font-weight: 600;
 }
 
-/* --------------------------------------------------------------------------
+/*
    HOME PAGE: Feature row
-   -------------------------------------------------------------------------- */
+    */
 .feature-row {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -966,9 +958,7 @@
   color: var(--text-muted);
 }
 
-/* --------------------------------------------------------------------------
-   HOME PAGE: Section headings
-   -------------------------------------------------------------------------- */
+/*    HOME PAGE: Section headings    */
 .plans-section {
   scroll-margin-top: 90px;
   margin-bottom: 4rem;
@@ -999,9 +989,7 @@
   max-width: 56ch;
 }
 
-/* --------------------------------------------------------------------------
-   INDIVIDUAL INSURANCE PLANS (Single Coverage Only)
-   -------------------------------------------------------------------------- */
+/*    INDIVIDUAL INSURANCE PLANS (Single Coverage Only)    */
 .plans-header-banner {
   background: linear-gradient(135deg, #073835 0%, #0c5650 50%, #0e8a82 100%);
   color: #ffffff;
@@ -1353,9 +1341,9 @@
   width: 90%;
 }
 
-/* --------------------------------------------------------------------------
+/*
    HOME PAGE: How it works
-   -------------------------------------------------------------------------- */
+    */
 .steps-section {
   margin-bottom: 3.5rem;
 }
@@ -1414,9 +1402,9 @@
   max-width: 34ch;
 }
 
-/* --------------------------------------------------------------------------
+/*
    HOME PAGE: Closing CTA
-   -------------------------------------------------------------------------- */
+    */
 .cta-band {
   display: flex;
   align-items: center;
@@ -1443,9 +1431,9 @@
   font-size: 0.95rem;
 }
 
-/* --------------------------------------------------------------------------
+/*
    Modal: Add Customer Form
-   -------------------------------------------------------------------------- */
+    */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -1458,6 +1446,8 @@
   padding: 1.5rem;
   animation: fadeIn 0.18s ease-out;
 }
+
+/* Login model card  */
 
 .modal-card {
   width: 100%;
@@ -1593,9 +1583,45 @@
   border-top: 1px solid var(--border-subtle);
 }
 
-/* --------------------------------------------------------------------------
+/* Password visibility toggle */
+.input-with-icon {
+  position: relative;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: color 0.2s ease;
+}
+
+.password-toggle-btn:hover {
+  color: var(--primary-600);
+}
+
+.password-toggle-btn:focus-visible {
+  outline: 2px solid var(--primary-600);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Prevent password text from overlapping the eye button */
+.input-with-icon input {
+  padding-right: 42px;
+}
+
+/*
    Customer Detail Drawer (Slide-Over)
-   -------------------------------------------------------------------------- */
+    */
 .drawer-backdrop {
   position: fixed;
   inset: 0;
@@ -1679,9 +1705,9 @@
   font-weight: 700;
 }
 
-/* --------------------------------------------------------------------------
+/*
    Toasts & Alerts
-   -------------------------------------------------------------------------- */
+    */
 .toast-banner {
   display: flex;
   align-items: center;
@@ -1707,9 +1733,7 @@
   color: #15803d;
 }
 
-/* --------------------------------------------------------------------------
-   Keyframe Animations
-   -------------------------------------------------------------------------- */
+/*    Keyframe Animations    */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -1764,9 +1788,7 @@
   }
 }
 
-/* --------------------------------------------------------------------------
-   Dropdown of Insurance plans
-   -------------------------------------------------------------------------- */
+/*    Dropdown of Insurance plans    */
 .plan-select-wrapper {
   position: relative;
   width: 100%;
@@ -1819,9 +1841,7 @@
   font-size: 14px;
 }
 
-/* --------------------------------------------------------------------------
-   Horizontal scrolling for insurance plans
-   -------------------------------------------------------------------------- */
+/*    Horizontal scrolling for insurance plans   */
 .plans-scroll-wrapper {
   position: relative;
   width: 100%;
@@ -1889,9 +1909,9 @@
   right: -14px;
 }
 
-/* --------------------------------------------------------------------------
+/*
    Responsive Styles
-   -------------------------------------------------------------------------- */
+    */
 @media (max-width: 1100px) {
   .feature-row {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2022,9 +2042,7 @@
   }
 }
 
-/* --------------------------------------------------------------------------
-   Plan details modal
-   -------------------------------------------------------------------------- */
+/*    Plan details modal    */
 .modal-card.plan-modal {
   max-width: 620px;
   max-height: calc(100vh - 3.5rem);
@@ -2347,9 +2365,7 @@
   }
 }
 
-/* --------------------------------------------------------------------------
-   Application status pills
-   -------------------------------------------------------------------------- */
+/*    Application status pills    */
 .status-pending,
 .status-approved,
 .status-rejected {
@@ -2376,9 +2392,7 @@
   background: #fee2e2;
 }
 
-/* --------------------------------------------------------------------------
-   Admin Plans Toolbar & Custom Elements
-   -------------------------------------------------------------------------- */
+/*    Admin Plans Toolbar & Custom Elements    */
 .admin-plans-toolbar {
   display: flex;
   align-items: center;
@@ -2539,9 +2553,6 @@
 }
 
 /* Modal form presets */
-.admin-plan-modal-card {
-  max-width: 580px;
-}
 
 .preset-buttons-row {
   display: flex;
@@ -2596,9 +2607,9 @@
   color: var(--primary-800);
 }
 
-/* --------------------------------------------------------------------------
+/*
    Executive Admin Dashboard Enhancements
-   -------------------------------------------------------------------------- */
+    */
 .live-status-dot {
   width: 8px;
   height: 8px;
@@ -3071,11 +3082,6 @@
 }
 
 /* For the Contact Us page */
-
-/* =========================================
-   CONTACT US PAGE
-========================================= */
-
 .contact-page {
   width: 100%;
   max-width: 1440px;
@@ -3717,5 +3723,468 @@
 
   .contact-cta-btn {
     width: 100%;
+  }
+}
+
+/*    ADMIN: CREATE / EDIT INSURANCE PLAN MODAL (Pixel-perfect to reference design)    */
+
+.modal-card.admin-plan-modal-card {
+  width: min(840px, 95vw) !important;
+  max-width: 840px !important;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  border: none;
+  padding: 0;
+}
+
+.admin-plan-modal-card .modal-header-banner {
+  background: linear-gradient(135deg, #074741 0%, #0a544c 60%, #0d645b 100%);
+  color: #ffffff;
+  padding: 1.5rem 2rem 1.4rem;
+  position: relative;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-plan-modal-card .modal-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
+.admin-plan-modal-card .modal-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  padding: 3px 12px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.admin-plan-modal-card .modal-close-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #ffffff;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.admin-plan-modal-card .modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.admin-plan-modal-card .modal-title {
+  font-family: inherit;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.admin-plan-modal-card .modal-subtitle {
+  font-size: 0.82rem;
+  color: #d1fae5;
+  margin: 4px 0 0;
+  opacity: 0.92;
+  line-height: 1.4;
+}
+
+.admin-plan-modal-card .admin-modal-body-scroll {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 1.75rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f8fafc;
+}
+
+.admin-plan-modal-card .admin-modal-body-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.admin-plan-modal-card .admin-modal-body-scroll::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+.admin-plan-modal-card .admin-modal-body-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+/* Sections */
+.admin-plan-modal-card .admin-form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.admin-plan-modal-card .admin-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.admin-plan-modal-card .admin-section-title {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 2px 0;
+}
+
+.admin-plan-modal-card .admin-section-desc {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* Form Controls */
+.admin-plan-modal-card .admin-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-plan-modal-card .admin-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-plan-modal-card .admin-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.admin-plan-modal-card .admin-req-star {
+  color: #ef4444;
+  font-weight: 700;
+  margin-left: 3px;
+}
+
+.admin-plan-modal-card .admin-req-tag {
+  color: #ef4444;
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+.admin-plan-modal-card .admin-modal-input,
+.admin-plan-modal-card .admin-modal-select,
+.admin-plan-modal-card .admin-modal-textarea {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 0.86rem;
+  color: #0f172a;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.admin-plan-modal-card .admin-modal-input {
+  height: 38px;
+}
+
+.admin-plan-modal-card .admin-modal-select {
+  height: 38px;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 8px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-right: 28px;
+  appearance: none;
+  cursor: pointer;
+}
+
+.admin-plan-modal-card .admin-modal-textarea {
+  resize: vertical;
+  min-height: 72px;
+  line-height: 1.5;
+}
+
+.admin-plan-modal-card .admin-modal-input:focus,
+.admin-plan-modal-card .admin-modal-select:focus,
+.admin-plan-modal-card .admin-modal-textarea:focus {
+  outline: none;
+  border-color: #084d47;
+  box-shadow: 0 0 0 3px rgba(8, 77, 71, 0.12);
+}
+
+.admin-plan-modal-card .admin-modal-input::placeholder,
+.admin-plan-modal-card .admin-modal-textarea::placeholder {
+  color: #9ca3af;
+}
+
+/* 3-column Grid */
+.admin-plan-modal-card .admin-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+/* Section 2: Duration Presets */
+.admin-plan-modal-card .duration-presets-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.admin-plan-modal-card .presets-label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #64748b;
+  margin-right: 2px;
+}
+
+.admin-plan-modal-card .duration-chip {
+  padding: 5px 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.admin-plan-modal-card .duration-chip:hover {
+  border-color: #084d47;
+  color: #084d47;
+  background: #f0fdf9;
+}
+
+.admin-plan-modal-card .duration-chip.active {
+  background: #084d47;
+  border-color: #084d47;
+  color: #ffffff;
+}
+
+/* Section 3: Pricing Rules */
+.admin-plan-modal-card .btn-add-section-item {
+  padding: 5px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #1e293b;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.admin-plan-modal-card .btn-add-section-item:hover {
+  border-color: #084d47;
+  color: #084d47;
+  background: #f0fdf9;
+}
+
+.admin-plan-modal-card .pricing-rule-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #ffffff;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-plan-modal-card .pricing-rule-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-plan-modal-card .pricing-rule-card-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.admin-plan-modal-card .btn-remove-rule {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #ef4444;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 4px;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.admin-plan-modal-card .btn-remove-rule:hover {
+  background: #fee2e2;
+  border-color: #f87171;
+}
+
+.admin-plan-modal-card .admin-checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: #334155;
+  cursor: pointer;
+  user-select: none;
+  margin-top: 2px;
+}
+
+.admin-plan-modal-card .admin-checkbox-label input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  accent-color: #084d47;
+  cursor: pointer;
+}
+
+/* Coverage Presets Row */
+.admin-plan-modal-card .coverage-presets-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.admin-plan-modal-card .coverage-chip {
+  padding: 4px 10px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.admin-plan-modal-card .coverage-chip:hover {
+  border-color: #084d47;
+  color: #084d47;
+  background: #f0fdf9;
+}
+
+.admin-plan-modal-card .coverage-chip.active {
+  background: #084d47;
+  border-color: #084d47;
+  color: #ffffff;
+}
+
+/* Benefits & Conditions Cards */
+.admin-plan-modal-card .admin-item-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #ffffff;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-plan-modal-card .admin-item-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Modal Footer Actions */
+.admin-plan-modal-card .admin-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 1.15rem 2rem;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  flex-shrink: 0;
+}
+
+.admin-plan-modal-card .btn-modal-cancel {
+  padding: 8px 18px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.admin-plan-modal-card .btn-modal-cancel:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #1e293b;
+}
+
+.admin-plan-modal-card .btn-modal-submit {
+  padding: 8px 22px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: #084d47;
+  border: 1px solid #084d47;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.admin-plan-modal-card .btn-modal-submit:hover:not(:disabled) {
+  background: #063934;
+  border-color: #063934;
+}
+
+.admin-plan-modal-card .btn-modal-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .admin-plan-modal-card .admin-grid-3 {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .admin-plan-modal-card .admin-modal-body-scroll {
+    padding: 1.25rem 1rem;
+  }
+
+  .admin-plan-modal-card .modal-header-banner {
+    padding: 1.25rem 1rem;
+  }
+
+  .admin-plan-modal-card .admin-modal-footer {
+    padding: 1rem;
   }
 }
